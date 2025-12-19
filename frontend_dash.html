@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dash AI - Final HUD</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+    <div id="prototype-container">
+        <video id="driving-video" src="assets/driving.mp4" loop muted playsinline></video>
+        <img id="ar-overlay-image" src="" alt="AR Overlay">
+
+        <div id="ui-overlay">
+            <div id="top-controls">
+                <button id="reset-pill" title="Click to Reset Simulation">
+                    <div id="status-light"></div>
+                    <div id="debug-clock">0.00s</div>
+                </button>
+            </div>
+
+            <div id="ar-display-area">
+                <div id="collapsed-card-row"></div>
+                <div id="current-card-row"></div>
+            </div>
+
+            <div id="card-storage" style="display: none;">
+                <!-- Full Gas/Food Assets -->
+                <!-- GAS -->
+                <div class="card" id="card_shell.png">
+                    <input type="radio" name="location" id="location-shell">
+                    <label class="card-body" for="location-shell">
+                        <img src="icons/shell.jpeg" alt="Shell logo" class="logo">
+                        <div class="info">
+                            <div class="title">Shell</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.3</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Denver • 5 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_king_soopers.png">
+                    <input type="radio" name="location" id="location-king">
+                    <label class="card-body" for="location-king">
+                        <img src="icons/kingsoopers.png" alt="King Soopers Gas logo" class="logo">
+                        <div class="info">
+                            <div class="title">King Soopers Gas</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.7</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Broomfield • 2 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_conoco.png">
+                    <input type="radio" name="location" id="location-conoco">
+                    <label class="card-body" for="location-conoco">
+                        <img src="icons/conoco.png" alt="Conoco logo" class="logo">
+                        <div class="info">
+                            <div class="title">Conoco</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">3.9</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Boulder • 3 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_7_eleven.png">
+                    <input type="radio" name="location" id="location-7eleven">
+                    <label class="card-body" for="location-7eleven">
+                        <img src="icons/7eleven.png" alt="7-Eleven logo" class="logo">
+                        <div class="info">
+                            <div class="title">7-Eleven Gas</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.1</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Broomfield • 3 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_exxon.png">
+                    <input type="radio" name="location" id="location-exxon">
+                    <label class="card-body" for="location-exxon">
+                        <img src="icons/exxon.png" alt="Exxon logo" class="logo">
+                        <div class="info">
+                            <div class="title">Exxon</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.8</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Boulder • 1 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_circle_k.png">
+                    <input type="radio" name="location" id="location-circlek">
+                    <label class="card-body" for="location-circlek">
+                        <img src="icons/circlek.jpeg" alt="Circle K logo" class="logo">
+                        <div class="info">
+                            <div class="title">Circle K</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">3.6</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Lyons • 1 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- FOOD -->
+                <div class="card" id="card_pf_changs.png">
+                    <input type="radio" name="location" id="location-pfchangs">
+                    <label class="card-body" for="location-pfchangs">
+                        <img src="icons/pfchangs.png" alt="P.F. Chang's logo" class="logo">
+                        <div class="info">
+                            <div class="title">P.F. Chang's</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.4</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Broomfield • 7 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+
+
+                <div class="card" id="card_avery_brewing.png">
+                    <input type="radio" name="location" id="location-avery">
+                    <label class="card-body" for="location-avery">
+                        <img src="icons/averybrewing.jpg" alt="Avery Brewing logo" class="logo">
+                        <div class="info">
+                            <div class="title">Avery Brewing Co.</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.5</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Boulder • 8 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_smokin_daves_bbq.png">
+                    <input type="radio" name="location" id="location-smokin">
+                    <label class="card-body" for="location-smokin">
+                        <img src="icons/smokedavebbq.jpeg" alt="Smokin' Dave's BBQ logo" class="logo">
+                        <div class="info">
+                            <div class="title">Smokin' Dave's BBQ</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.0</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Lyons • 5 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_panda_express.png">
+                    <input type="radio" name="location" id="location-panda">
+                    <label class="card-body" for="location-panda">
+                        <img src="icons/pandaexpress.jpeg" alt="Panda Express logo" class="logo">
+                        <div class="info">
+                            <div class="title">Panda Express</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">3.8</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Broomfield • 4 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_oskar_blues.png">
+                    <input type="radio" name="location" id="location-oskar">
+                    <label class="card-body" for="location-oskar">
+                        <img src="icons/Oskar.png" alt="Oskar Blues logo" class="logo">
+                        <div class="info">
+                            <div class="title">Oskar Blues Grill</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.7</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Lyons • 3 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_the_sink.png">
+                    <input type="radio" name="location" id="location-sink">
+                    <label class="card-body" for="location-sink">
+                        <img src="icons/thesink.jpeg" alt="The Sink logo" class="logo">
+                        <div class="info">
+                            <div class="title">The Sink</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.9</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Boulder • 8 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_corner_bar.png">
+                    <input type="radio" name="location" id="location-corner">
+                    <label class="card-body" for="location-corner">
+                        <img src="icons/cornerbar.jpeg" alt="Corner Bar logo" class="logo">
+                        <div class="info">
+                            <div class="title">Corner Bar</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.2</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Boulder • 9 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="card" id="card_waynes_smoke_shack.png">
+                    <input type="radio" name="location" id="location-waynes">
+                    <label class="card-body" for="location-waynes">
+                        <img src="icons/wayneslogo.png" alt="Wayne's Smoke Shack logo" class="logo">
+                        <div class="info">
+                            <div class="title">Wayne's Smoke Shack</div>
+                            <div class="details">
+                                <div class="rating-container">
+                                    <span class="rating-number">4.8</span>
+                                    <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="distance">Broomfield • 6 min detour</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Navigation Turns -->
+                <div class="guidance-card" id="card_turn_exit_9">
+                    <div class="guidance">
+                        <img src="icons/turnright.svg" alt="Turn right" class="instruction-icon">
+                        <div class="guidance-text">
+                            <div class="guidance-title">Take <span class="direction-highlight">Exit 9</span></div>
+                            <div class="guidance-direction">On the right</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="guidance-card" id="card_turn_1st_ave">
+                    <div class="guidance">
+                        <img src="icons/turnright.svg" alt="Turn right" class="instruction-icon">
+                        <div class="guidance-text">
+                            <div class="guidance-title">Turn right </div>
+                            <div class="guidance-direction">onto <span class="direction-highlight">1st Ave</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="guidance-card" id="card_turn_57">
+                    <div class="guidance">
+                        <img src="icons/turnleft.svg" alt="Turn left" class="instruction-icon">
+                        <div class="guidance-text">
+                            <div class="guidance-title">Turn left </div>
+                            <div class="guidance-direction">onto <span class="direction-highlight">East 57th St</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="guidance-card" id="card_turn_stay_left">
+                    <div class="guidance">
+                        <img src="icons/leftlane.svg" alt="Keep left" class="instruction-icon">
+                        <div class="guidance-title">Keep left </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="voice-controls">
+                <button id="mic-button" title="Click to speak to Dash">
+                    <svg class="mic-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+                        width="24px" fill="#FFFFFF">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                        <path
+                            d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                    </svg>
+                    <div class="voice-animation">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div id="start-overlay">
+            <button id="start-button">Start Driving</button>
+            <p>(Click to enable audio/video)</p>
+        </div>
+    </div>
+
+    <script>
+        let actionQueue = [];
+        let currentAction = null;
+        let isNavInterruptionActive = false;
+        let savedUIState = { collapsed: [], current: [] };
+        let cardHideTimeout = null;
+
+        function startCardHideTimer(duration = 30000) {
+            if (cardHideTimeout) clearTimeout(cardHideTimeout);
+            cardHideTimeout = setTimeout(() => {
+                hideAllCards();
+            }, duration);
+        }
+
+        const navigationEvents = [
+            { time: 19, instruction: "Take Exit 9 on the right.", card_asset: "card_turn_exit_9", duration: 6000, triggered: false },
+            { time: 73, instruction: "Turn right onto 1st Avenue.", card_asset: "card_turn_1st_ave", duration: 9000, triggered: false },
+            { time: 193, instruction: "Stay in the left lane for upcoming turn.", card_asset: "card_turn_stay_left", duration: 6000, triggered: false },
+            { time: 242, instruction: "Turn left onto East 57th Street.", card_asset: "card_turn_57", duration: 6000, triggered: false }
+        ];
+
+        const socket = io("http://127.0.0.1:5001");
+        const statusLight = document.getElementById("status-light");
+        const micButton = document.getElementById("mic-button");
+        const resetPill = document.getElementById("reset-pill");
+        const baseVideo = document.getElementById("driving-video");
+        const arOverlayImage = document.getElementById("ar-overlay-image");
+        const debugClock = document.getElementById("debug-clock");
+        const startOverlay = document.getElementById("start-overlay");
+        const startButton = document.getElementById("start-button");
+        const cardStorage = document.getElementById("card-storage");
+        const collapsedCardRow = document.getElementById("collapsed-card-row");
+        const currentCardRow = document.getElementById("current-card-row");
+        const allAssetCards = {};
+
+        document.querySelectorAll('.card-wrapper, .guidance-card, .instruction-card, .card').forEach(card => {
+            allAssetCards[card.id] = card;
+            cardStorage.appendChild(card);
+        });
+
+        // --- STATE MANAGEMENT ---
+        function saveCurrentUIState() {
+            savedUIState.collapsed = Array.from(document.querySelectorAll('#collapsed-card-row .card-wrapper, #collapsed-card-row .card')).map(el => el.id);
+            savedUIState.current = Array.from(document.querySelectorAll('#current-card-row .card-wrapper, #current-card-row .card')).map(el => el.id);
+        }
+
+        function restoreUIState() {
+            while (collapsedCardRow.firstChild) collapsedCardRow.removeChild(collapsedCardRow.firstChild);
+            while (currentCardRow.firstChild) currentCardRow.removeChild(currentCardRow.firstChild);
+
+            let restoredAnyCard = false;
+            savedUIState.collapsed.forEach(id => {
+                const card = allAssetCards[id];
+                if (card) {
+                    collapsedCardRow.appendChild(card);
+                    card.classList.add('collapsed');
+                    card.classList.remove('visible');
+                    restoredAnyCard = true;
+                }
+            });
+            savedUIState.current.forEach(id => {
+                const card = allAssetCards[id];
+                if (card) {
+                    currentCardRow.appendChild(card);
+                    card.classList.add('visible');
+                    card.classList.remove('collapsed');
+                    restoredAnyCard = true;
+                }
+            });
+
+            if (restoredAnyCard) startCardHideTimer();
+        }
+
+        // --- QUEUE PROCESSOR ---
+        function processQueue() {
+            if (isNavInterruptionActive) return;
+            if (actionQueue.length === 0 || currentAction) return;
+
+            currentAction = actionQueue.shift();
+
+            if (currentAction.type === 'speak') {
+                speak(currentAction.text, () => {
+                    currentAction = null;
+                    processQueue();
+                });
+            } else if (currentAction.type === 'card') {
+                showCard(currentAction.asset);
+                setTimeout(() => {
+                    currentAction = null;
+                    processQueue();
+                }, 50);
+            } else if (currentAction.type === 'move_card_to_collapsed') {
+                const visibleCard = currentCardRow.querySelector('.card-wrapper.visible, .card.visible');
+                if (visibleCard) {
+                    visibleCard.classList.remove('visible');
+                    visibleCard.classList.add('collapsed');
+                    collapsedCardRow.appendChild(visibleCard);
+                }
+                currentAction = null;
+                processQueue();
+            }
+        }
+
+        // --- SPEECH LOGIC ---
+        let selectedVoice = null;
+        function loadVoices() {
+            const voices = window.speechSynthesis.getVoices();
+            selectedVoice = voices.find(voice => voice.name === 'Google US English') ||
+                voices.find(voice => voice.lang === 'en-US' && !voice.localService) ||
+                voices.find(voice => voice.lang === 'en-US');
+        }
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+
+        function speak(text, onComplete) {
+            if (!text) { if (onComplete) onComplete(); return; }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (selectedVoice) utterance.voice = selectedVoice;
+
+            utterance.onend = () => {
+                if (isNavInterruptionActive) {
+                    if (currentAction) {
+                        actionQueue.unshift(currentAction);
+                        currentAction = null;
+                    }
+                } else {
+                    if (onComplete) onComplete();
+                }
+            };
+            utterance.onerror = () => {
+                if (isNavInterruptionActive && currentAction) {
+                    actionQueue.unshift(currentAction);
+                    currentAction = null;
+                }
+            }
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function forceSpeak(text, onComplete) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (selectedVoice) utterance.voice = selectedVoice;
+            utterance.onend = () => { if (onComplete) onComplete(); };
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // --- UI HELPERS ---
+        function showCard(assetName) {
+            console.log("🎯 showCard called with assetName:", assetName);
+            console.log("🗂️ allAssetCards has this card?", assetName in allAssetCards);
+            if (assetName && allAssetCards[assetName]) {
+                console.log("✅ Card found, displaying:", assetName);
+                // Collapse any currently visible cards in the main row
+                const existingVisibleCards = currentCardRow.querySelectorAll('.card-wrapper.visible, .card.visible');
+                existingVisibleCards.forEach(card => {
+                    // Move to collapsed row FIRST, maintaining its expanded state momentarily
+                    collapsedCardRow.appendChild(card);
+
+                    // Force a reflow to ensure the move is registered before we change classes
+                    void card.offsetWidth;
+
+                    // Now trigger the collapse animation
+                    requestAnimationFrame(() => {
+                        card.classList.remove('visible');
+                        card.classList.add('collapsed');
+                    });
+                });
+
+                const cardElement = allAssetCards[assetName];
+                currentCardRow.appendChild(cardElement);
+                setTimeout(() => {
+                    cardElement.classList.add('visible');
+                    cardElement.classList.remove('collapsed');
+                }, 10);
+
+                startCardHideTimer();
+            } else {
+                console.log("❌ Card NOT found:", assetName);
+                console.log("Available cards:", Object.keys(allAssetCards));
+            }
+        }
+
+        function hideAllCards() {
+            // Clear the auto-hide timeout since we're manually hiding cards
+            if (cardHideTimeout) {
+                clearTimeout(cardHideTimeout);
+                cardHideTimeout = null;
+            }
+
+            const visibleCards = document.querySelectorAll('#collapsed-card-row .card-wrapper, #current-card-row .card-wrapper, #collapsed-card-row .guidance-card, #current-card-row .guidance-card, #collapsed-card-row .instruction-card, #current-card-row .instruction-card, #collapsed-card-row .card, #current-card-row .card');
+            visibleCards.forEach(cardEl => {
+                cardEl.classList.remove('visible');
+                cardEl.classList.remove('collapsed');
+                cardStorage.appendChild(cardEl);
+            });
+            arOverlayImage.style.display = 'none';
+        }
+
+        // --- SOCKET HANDLING ---
+        socket.on("connect", () => {
+            statusLight.style.backgroundColor = "#34C759";
+            statusLight.style.boxShadow = "0 0 8px rgba(52, 199, 89, 0.8)";
+        });
+        socket.on("disconnect", () => {
+            statusLight.style.backgroundColor = "#FF3B30";
+            statusLight.style.boxShadow = "0 0 8px rgba(255, 59, 48, 0.5)";
+        });
+
+        socket.on("dash_response", (payload) => {
+            console.log("📦 Received payload:", payload);
+            micButton.classList.remove("thinking");
+            actionQueue = [];
+            currentAction = null;
+            window.speechSynthesis.cancel();
+            const cards = payload.data?.cards_to_show || [];
+            const responseType = payload.response_type;
+            const textToSpeak = payload.text_to_speak;
+            console.log("🎴 Cards to show:", cards);
+            console.log("📋 Response type:", responseType);
+            hideAllCards();
+
+            if (responseType === "show_options") {
+                const textChunks = textToSpeak.split('||').filter(chunk => chunk.trim().length > 0);
+                textChunks.forEach((chunk, index) => {
+                    if (cards[index]) {
+                        console.log(`🃏 Card ${index}: asset_name =`, cards[index].asset_name);
+                        actionQueue.push({ type: 'card', asset: cards[index].asset_name });
+                    }
+                    if (chunk.trim()) actionQueue.push({ type: 'speak', text: chunk.trim() });
+                });
+            } else if (responseType === "show_turn_image") {
+                actionQueue.push({ type: 'card', asset: payload.data.card_asset });
+                actionQueue.push({ type: 'speak', text: textToSpeak });
+            } else {
+                actionQueue.push({ type: 'speak', text: textToSpeak });
+            }
+            console.log("📝 Action queue:", actionQueue);
+            processQueue();
+        });
+
+        // --- NAVIGATION INTERRUPT LOGIC ---
+        function triggerHighPriorityNav(event) {
+            console.log(">>> INTERRUPT TRIGGERED <<<");
+            isNavInterruptionActive = true;
+            saveCurrentUIState();
+
+            // SAFETY: Force queue if silent
+            if (!window.speechSynthesis.speaking && currentAction) {
+                console.log("Interrupting silent action, re-queue:", currentAction);
+                actionQueue.unshift(currentAction);
+                currentAction = null;
+            }
+
+            // 1. Kill audio
+            window.speechSynthesis.cancel();
+            // 2. Hide previous cards
+            hideAllCards();
+
+            // 3. Show Card Overlay (HUD Mode)
+            showCard(event.card_asset);
+
+            // 4. Speak Instruction
+            forceSpeak(event.instruction, () => {
+                // 5. Wait 3 seconds
+                setTimeout(() => {
+                    console.log(">>> RESUMING <<<");
+                    hideAllCards();
+                    restoreUIState();
+                    isNavInterruptionActive = false;
+                    processQueue();
+                }, event.duration);
+            });
+        }
+
+        // --- MAIN LOOP ---
+        baseVideo.addEventListener('timeupdate', () => {
+            const currentTime = baseVideo.currentTime;
+            debugClock.textContent = currentTime.toFixed(2) + "s";
+
+            if (isNavInterruptionActive) return;
+            if (currentTime < 1) navigationEvents.forEach(ev => ev.triggered = false);
+
+            for (const event of navigationEvents) {
+                if (currentTime >= event.time && !event.triggered) {
+                    event.triggered = true;
+                    triggerHighPriorityNav(event);
+                    break;
+                }
+            }
+        });
+
+        // --- INPUT HANDLING ---
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.onstart = () => {
+                micButton.classList.remove("thinking");
+                micButton.classList.add("listening");
+            };
+            recognition.onend = () => { micButton.classList.remove("listening"); };
+            recognition.onresult = (e) => {
+                const text = e.results[0][0].transcript;
+                console.log("User: " + text);
+                micButton.classList.add("thinking");
+                socket.emit("user_spoke", { "text": text });
+            };
+        }
+
+        micButton.addEventListener("click", () => {
+            window.speechSynthesis.cancel();
+            actionQueue = [];
+            currentAction = null;
+            try { recognition.start(); } catch (e) { }
+        });
+
+        // --- INIT & RESET ---
+        startButton.addEventListener('click', () => {
+            window.speechSynthesis.cancel();
+            startOverlay.style.display = 'none';
+            baseVideo.play();
+        });
+
+        resetPill.addEventListener('click', () => {
+            baseVideo.pause();
+            window.speechSynthesis.cancel();
+            if (recognition) try { recognition.abort(); } catch (e) { }
+            baseVideo.currentTime = 0;
+            actionQueue = [];
+            currentAction = null;
+            isNavInterruptionActive = false;
+            micButton.classList.remove("listening", "thinking");
+            navigationEvents.forEach(ev => ev.triggered = false);
+            hideAllCards();
+            startOverlay.style.display = 'flex';
+        });
+    </script>
+</body>
+
+</html>
